@@ -93,6 +93,7 @@ def screen_2():
 
 while True:
     
+    #60 fps
     clock.tick(60)
     
     for event in pygame.event.get():
