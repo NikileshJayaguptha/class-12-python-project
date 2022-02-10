@@ -54,24 +54,54 @@ class Ground():
 		window.blit(self.img,(self.x1,self.y))
 		window.blit(self.img,(self.x2,self.y))
 
+#!Dino class
+class Dino():
+	def __init__(self,x,y):
+		self.x = x
+		self.y = y
+
+		self.runlist = Running
+		self.ducklist=Ducking
+		self.run_count = 0
+		self.img = self.runlist[self.run_count]
+		self.rect = self.img.get_rect()
+		self.rect.x = x
+		self.rect.y = y
+
+	def update(self):
+			self.run_count+=1
+			if self.run_count+1>=4:
+				self.run_count = 0
+
+	def draw(self,win):
+		win.blit(self.img,self.rect)	
+
 
 #! animation functions
 def groundanimation():
 	ground.draw(WIN)
 	ground.update(4)
 
+def dinoanimation():
+	dino.draw(WIN)
+
 #! object initialisation
 ground = Ground()
+dino = Dino(50,320)
 
 #! Colours
 WHITE = (255,255,255)
-GRAY =(128, 128, 128)
+GRAY =(32, 32, 32)
 
 #! Draw Window
 def draw_window():
 	WIN.fill(GRAY)
 	#! ground animation
 	groundanimation()
+
+	#!dino animation
+	dinoanimation()
+
 	#!updating the window
 	pygame.display.update()
 
@@ -90,3 +120,4 @@ while run:
 	#! drawing things
 	draw_window()
 
+pygame.quit()
