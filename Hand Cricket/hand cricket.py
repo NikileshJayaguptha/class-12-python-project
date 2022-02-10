@@ -2,8 +2,8 @@
 import pygame  
 import sys
 import os
-#from pygame.locals import *
 
+#from pygame.locals import *
 clock = pygame.time.Clock()
 pygame.init()  
 
@@ -19,13 +19,13 @@ screen = pygame.display.set_mode((height, width))
 pygame.display.set_caption('HAND CRICKET') 
 
 #images
-bg = pygame.image.load(r"project\title_1.png")
-bg_blur = pygame.image.load(r"project\bg_blur.png")
-play_button = pygame.image.load(r"project\buttons\play.png")
-exit_button = pygame.image.load(r"project\buttons\leave.png")
-how_to_button = pygame.image.load(r"project\buttons\how_to_play.png")
-rules = pygame.image.load(r"project\rules.png")
-back = pygame.image.load(r"project\buttons\back.png")
+bg = pygame.image.load(r"Hand Cricket\title_1.png")
+bg_blur = pygame.image.load(r"Hand Cricket\bg_blur.png")
+play_button = pygame.image.load(r"Hand Cricket\buttons\play.png")
+exit_button = pygame.image.load(r"Hand Cricket\buttons\leave.png")
+how_to_button = pygame.image.load(r"Hand Cricket\buttons\how_to_play.png")
+rules = pygame.image.load(r"Hand Cricket\rules.png")
+back = pygame.image.load(r"Hand Cricket\buttons\back.png")
 
 r = 0
 screen_num = 0
@@ -100,7 +100,7 @@ while True:
         screens()
 
         #music
-        pygame.mixer.music.load("project\Wii_music.mp3")
+        pygame.mixer.music.load("Hand Cricket\Wii_music.mp3")
         pygame.mixer.music.play(-1)
         
         #screens
