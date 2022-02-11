@@ -54,14 +54,18 @@ def screen_1():
 
     #start game
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+
         x , y = pygame.mouse.get_pos()
+        
         if exit_button.get_rect().collidepoint(x-175 , y-150):
             r = 1
             screens()
 
     #rules
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+
         x , y = pygame.mouse.get_pos()
+
         if exit_button.get_rect().collidepoint(x-300 , y-150):
             r = 2
             screens()
@@ -71,8 +75,11 @@ def screen_1():
         pygame.mixer.music.stop()
         pygame.quit()
         quit()
+
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  
+
         x , y = pygame.mouse.get_pos()
+
         if exit_button.get_rect().collidepoint(x-50 , y-150):
             pygame.mixer.music.stop()
             pygame.quit()  
@@ -82,7 +89,9 @@ def screen_2():
     global screen_num
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:  
+
         x , y = pygame.mouse.get_pos()
+
         if exit_button.get_rect().collidepoint(x-350 , y-150):
             screens()
 
