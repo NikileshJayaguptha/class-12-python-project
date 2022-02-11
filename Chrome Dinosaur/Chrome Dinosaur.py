@@ -10,6 +10,7 @@ height = 600
 width = 1100
 
 WIN = pygame.display.set_mode((width,height))
+
 pygame.display.set_caption("Dino Run")
 
 
@@ -112,11 +113,15 @@ FPS= 60
 
 #! main loop
 while run:
+
 	#! setting the fps for game
 	clock.tick(FPS)
+
+	#! quitting the loop
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			run =False
+
 	#! drawing things
 	draw_window()
 
