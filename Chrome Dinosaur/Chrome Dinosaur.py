@@ -65,26 +65,89 @@ class Dino():
 		self.ducklist=Ducking
 		self.run_count = 0
 		self.img = self.runlist[self.run_count]
-		self.rect = self.img.get_rect()
-		self.rect.x = x
-		self.rect.y = y
 
-	def update(self):
+		self.index=0
+		self.run_count=0
+		self.rect = self.img.get_rect()
+		self.rect.x = self.x
+		self.rect.y = self.y
+
+		self.vel = 0
+		self.gravity = 1
+		self.jumpHeight = 20
+		self.isJumping = False
+		
+		
+
+	def update(self, duck,jump):
+		if not duck:
+			if not self.isJumping and jump:
+				self.vel = -self.jumpHeight
+				self.isJumping = True
+
+			self.vel += self.gravity
+			if self.vel >= self.jumpHeight:
+				self.vel = self.jumpHeight
+
+			self.rect.y += self.vel
+			if self.rect.y > self.y:
+				self.rect.y = self.y
+				self.isJumping = False
+	
+	
+			
+		if duck:
 			self.run_count+=1
-			if self.run_count+1>=4:
+			if self.run_count+1>=6:
+				self.index = (self.index+1) % len(self.ducklist)
+				self.img = self.ducklist[self.index]
+				self.rect = self.img.get_rect()
+				self.rect.x = self.x
+				self.rect.y = self.y+35
+				self.run_count=0
+
+		elif self.isJumping:
+				self.index = 0
 				self.run_count = 0
+				self.image = self.runlist[self.index]
+			
+		else:
+			self.run_count+=1
+			if self.run_count+1>=6:
+				self.index = (self.index+1) % len(self.runlist)
+				self.img = self.runlist[self.index]
+				self.rect = self.img.get_rect()
+				self.rect.x = self.x
+				self.rect.y = self.y
+				self.run_count=0
+		
 
 	def draw(self,win):
 		win.blit(self.img,self.rect)	
+
+#! Cactus class
+
+class Cactus(pygame.sprite.Sprite):
+	def __init__(self,type):
+		super(Cactus,self).__init__()
+	
+	
 
 
 #! animation functions
 def groundanimation():
 	ground.draw(WIN)
-	ground.update(4)
+	ground.update(6)
 
 def dinoanimation():
+	global duck
+	duck = False
+	keys = pygame.key.get_pressed()
+
+	if keys[pygame.K_DOWN]:
+		duck = True
 	dino.draw(WIN)
+	dino.update(duck,jump)
 
 #! object initialisation
 ground = Ground()
@@ -109,19 +172,35 @@ def draw_window():
 #!loop variables
 run = True
 clock = pygame.time.Clock()
-FPS= 60
+FPS= 30
+duck = False
+jump = False
+
 
 #! main loop
 while run:
-
+	
 	#! setting the fps for game
 	clock.tick(FPS)
 
 	#! quitting the loop
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
-			run =False
+			run = False
+	#! key bindings
+	keys = pygame.key.get_pressed()
 
+	if keys[pygame.K_DOWN]:
+		duck = True
+	else:
+		duck =False
+	if keys[pygame.K_UP]:
+		jump =True
+	else:
+		jump = False
+	
+
+	
 	#! drawing things
 	draw_window()
 
