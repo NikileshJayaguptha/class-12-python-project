@@ -1,6 +1,10 @@
 import pygame
 import os
 import random
+
+#!font setup
+pygame.font.init()
+
 #! initialising
 pygame.init()
 
@@ -12,7 +16,6 @@ width = 1100
 WIN = pygame.display.set_mode((width,height))
 
 pygame.display.set_caption("Dino Run")
-
 
 #! Loading Images
 
@@ -37,8 +40,11 @@ Birdlist = [
 	pygame.image.load(os.path.join("Chrome Dinosaur/assets/Bird","Bird2.png"))
 ]
 
-bg = pygame.image.load(os.path.join("Chrome Dinosaur/assets/Other","Track.png"))
+Dead_dino = pygame.image.load(os.path.join("Chrome Dinosaur/assets/Dino","DinoDead.png")) 
 
+Gameover = pygame.image.load(os.path.join("Chrome Dinosaur/assets/Other","Gameover.png")) 
+
+bg = pygame.image.load(os.path.join("Chrome Dinosaur/assets/Other","Track.png"))
 
 #! classes for drawings
 
@@ -72,10 +78,12 @@ class Dino():
 		self.x = x
 		self.y = y
 
+		self.alive = True
 		self.runlist = Running
 		self.ducklist=Ducking
 		self.run_count = 0
 		self.img = self.runlist[self.run_count]
+		self.deadimg = Dead_dino
 
 		self.index=0
 		self.run_count=0
@@ -83,57 +91,62 @@ class Dino():
 		self.rect.x = self.x
 		self.rect.y = self.y
 
+	    #! mask for collision detection
+		self.mask = pygame.mask.from_surface(self.img)	
+
+
+       #! jumping variables
 		self.vel = 0
 		self.gravity = 1
 		self.jumpHeight = 20
 		self.isJumping = False
 		
-		
 
 	def update(self, duck,jump):
-		if not duck:
-			if not self.isJumping and jump :
-				self.vel = -self.jumpHeight
-				self.isJumping = True
-				
+		if self.alive:
+			if not duck:
+				if not self.isJumping and jump :
+					self.vel = -self.jumpHeight
+					self.isJumping = True
+					
 
-			self.vel += self.gravity
-			if self.vel >= self.jumpHeight:
-				self.vel = self.jumpHeight
+				self.vel += self.gravity
+				if self.vel >= self.jumpHeight:
+					self.vel = self.jumpHeight
 
-			self.rect.y += self.vel
-			if self.rect.y > self.y:
-				self.rect.y = self.y
-				self.isJumping = False
-	
-	
-			
-		if duck :
-			self.run_count+=1
-			if self.run_count+1>=6:
-				self.index = (self.index+1) % len(self.ducklist)
-				self.img = self.ducklist[self.index]
-				self.rect = self.img.get_rect()
-				self.rect.x = self.x
-				self.rect.y = self.y+35
-				self.run_count=0
-
-		elif self.isJumping:
-				self.index = 0
-				self.run_count = 0
-				self.image = self.runlist[self.index]
-			
-		else:
-			self.run_count+=1
-			if self.run_count+1>=6:
-				self.index = (self.index+1) % len(self.runlist)
-				self.img = self.runlist[self.index]
-				self.rect = self.img.get_rect()
-				self.rect.x = self.x
-				self.rect.y = self.y
-				self.run_count=0
+				self.rect.y += self.vel
+				if self.rect.y > self.y:
+					self.rect.y = self.y
+					self.isJumping = False
 		
+		
+			if duck :
+				self.run_count+=1
+				if self.run_count+1>=6:
+					self.index = (self.index+1) % len(self.ducklist)
+					self.img = self.ducklist[self.index]
+					self.rect = self.img.get_rect()
+					self.rect.x = self.x
+					self.rect.y = self.y+35
+					self.run_count=0
 
+			elif self.isJumping:
+					self.index = 0
+					self.run_count = 0
+					self.image = self.runlist[self.index]
+				
+			else:
+				self.run_count+=1
+				if self.run_count+1>=6:
+					self.index = (self.index+1) % len(self.runlist)
+					self.img = self.runlist[self.index]
+					self.rect = self.img.get_rect()
+					self.rect.x = self.x
+					self.rect.y = self.y
+					self.run_count=0
+		else:
+			self.img = self.deadimg
+			
 	def draw(self,win):
 		win.blit(self.img,self.rect)	
 
@@ -149,11 +162,15 @@ class Cactus(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.rect.x = width
 		self.rect.bottom = 420
+
+		#!mask for collision detection
+		self.mask = pygame.mask.from_surface(self.image)
 	
-	def update(self,speed):
-		self.rect.x -= speed
-		if self.rect.right<=0:
-			self.kill()
+	def update(self,speed,dino):
+		if dino.alive:
+			self.rect.x -= speed
+			if self.rect.right<=0:
+				self.kill()
 	
 	def draw(self,win):
 		win.blit(self.image,self.rect)
@@ -170,28 +187,36 @@ class Bird(pygame.sprite.Sprite):
 		self.image = self.image_list[self.index]
 		self.rect = self.image.get_rect(center = (x,y))
 		self.counter = 0
-	
-	def update(self,speed):
-		self.rect.x -= speed
-		if self.rect.right <= 0:
-			self.kill()
 
-		self.counter += 1
-		if self.counter >= 6:
-			self.index = (self.index + 1) % len(self.image_list)
-			self.image = self.image_list[self.index]
-			self.counter = 0
+		#!mask for collision detection
+		self.mask = pygame.mask.from_surface(self.image)
+	
+	def update(self,speed,dino):
+		if dino.alive:
+			self.rect.x -= speed
+			if self.rect.right <= 0:
+				self.kill()
+
+			self.counter += 1
+			if self.counter >= 6:
+				self.index = (self.index + 1) % len(self.image_list)
+				self.image = self.image_list[self.index]
+				self.counter = 0
 	
 	def draw(self,win):
-		win.blit(self.image,self.rect)
+			win.blit(self.image,self.rect)
 
 #! animation functions
 def groundanimation():
+	global SPEED
+	global SPEEDBIRD
 	ground.draw(WIN)
-	ground.update(9)
+	ground.update(SPEED)
 
 def dinoanimation():
 	global duck
+	global SPEED
+	global SPEEDBIRD
 	duck = False
 	keys = pygame.key.get_pressed()
 
@@ -201,6 +226,8 @@ def dinoanimation():
 	dino.update(duck,jump)
 
 def enemyanimation():
+	global SPEED
+	global SPEEDBIRD
 	global counter
 	enemy_timer = 60
 	counter+=1
@@ -214,12 +241,45 @@ def enemyanimation():
 			cactus = Cactus(type)
 			cacgrp.add(cactus)
 	
-	birdgrp.update(12)
+	birdgrp.update(SPEEDBIRD,dino)
 	birdgrp.draw(WIN)
 
-	cacgrp.update(9)
+	cacgrp.update(SPEED,dino)
 	cacgrp.draw(WIN)
 
+#! collision detection
+def collision_detection(dino):
+	if dino.alive:
+		global SPEED
+		global SPEEDBIRD
+		for cactus in cacgrp:
+			if pygame.sprite.collide_mask(dino,cactus):
+				SPEED=0
+				SPEEDBIRD=0
+				dino.alive =False
+				
+
+		for bird in birdgrp:
+			if pygame.sprite.collide_mask(dino,bird):
+				SPEED=0
+				SPEEDBIRD=0
+				dino.alive =False
+				
+
+def scorecounter(dino):
+	global SCORE
+	
+	font = pygame.font.SysFont("comicsans",50)
+	
+	score = font.render(f"SCORE: {SCORE}",1,(255,255,255))
+	gameover_score = font.render(f"SCORE: {SCORE}",1,(83,83,83))
+
+	if dino.alive:
+		SCORE+=1
+		WIN.blit(score,(10,10))
+	else:
+		WIN.blit(Gameover,((width//2)-(Gameover.get_width()//2),250))
+		WIN.blit(gameover_score,(width//2 - (score.get_width()//2),height//2))
 
 
 #! object initialisation
@@ -239,6 +299,13 @@ GRAY =(32, 32, 32)
 #! Draw Window
 def draw_window():
 	WIN.fill(GRAY)
+
+	#!display score
+	scorecounter(dino)
+	
+	#!collision detection
+	collision_detection(dino)
+
 	#! ground animation
 	groundanimation()
 
@@ -248,7 +315,6 @@ def draw_window():
 	#!dino animation
 	dinoanimation()
 
-	
 
 	#!updating the window
 	pygame.display.update()
@@ -259,8 +325,11 @@ clock = pygame.time.Clock()
 FPS= 30
 duck = False
 jump = False
-counter = 0 
+counter = 0
+SCORE = 0
 
+SPEED = 9
+SPEEDBIRD=12
 
 
 #! main loop
@@ -286,7 +355,6 @@ while run:
 		jump = False
 	
 
-	
 	#! drawing things
 	draw_window()
 
