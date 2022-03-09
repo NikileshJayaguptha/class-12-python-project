@@ -1,4 +1,8 @@
 #modules
+from re import X
+import time
+from tokenize import cookie_re
+from tracemalloc import start
 import pygame  
 import random
 import sys
@@ -24,9 +28,15 @@ width = 350
 screen = pygame.display.set_mode((height, width))  
 pygame.display.set_caption('HAND CRICKET') 
 
+<<<<<<< HEAD
+name = input("Enter your name: ")
+
+#images
+=======
 #IMAGES
 
 #background
+>>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
 bg_blur = pygame.image.load(r"Hand Cricket\bg_blur.png")
 
 #numbers
@@ -86,8 +96,13 @@ def screen2():
             pygame.quit()
             quit()
 
+out = 0
 def outscreen():
+<<<<<<< HEAD
+    global out
+=======
 
+>>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
     r = int(random.randint(1,7))
 
     if r == 1:
@@ -110,12 +125,30 @@ def outscreen():
 
     elif r == 7:
         screen.blit(out7, (0,0))
+    out = 1
 
+<<<<<<< HEAD
+def gameplay(a):
+    global out
+    global score
+    b = int(random.randint(1,10))
+    #n = 0
+    while True:
+        #n += 1
+        if a == b:
+            outscreen()
+        else:
+            score = score + a
+            font()
+        break
+    #balls = n
+=======
 def music():
 
     #music
     pygame.mixer.music.load("Hand Cricket\Wii_music.mp3")
     pygame.mixer.music.play(-1)
+>>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
 
 #variables
 a = 0
@@ -129,62 +162,79 @@ def player():
         x , y = pygame.mouse.get_pos()
         if one_image.get_rect().collidepoint(x-25,y-25):
             a = 1
-            gameplay()
+            gameplay(a)
     
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if two_image.get_rect().collidepoint(x-125,y-25):
             a = 2
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if three_image.get_rect().collidepoint(x-225,y-25):
             a = 3
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if four_image.get_rect().collidepoint(x-325,y-25):
             a = 4
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if five_image.get_rect().collidepoint(x-425,y-25):
             a = 5
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if six_image.get_rect().collidepoint(x-25,y-125):
             a = 6
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if seven_image.get_rect().collidepoint(x-125,y-125):
             a = 7
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if eight_image.get_rect().collidepoint(x-225,y-125):
             a = 8
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if nine_image.get_rect().collidepoint(x-325,y-125):
             a = 9
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if ten_image.get_rect().collidepoint(x-425,y-125):
             a = 10
-            gameplay()
+            gameplay(a)
     
+<<<<<<< HEAD
+def font():
+    myfont = pygame.font.SysFont('Comic Sans MS', 50)
+    text = myfont.render(str(score), True, white)
+    screen.blit(text, (425,250))
+    pygame.display.update()
+
+def game():
+    screen1()
+    screen2()
+    player()
+
+def leave():
+    if event.type == pygame.QUIT:
+        pygame.quit()
+        quit()
+=======
     myfont = pygame.font.SysFont('Comic Sans MS', 30)
 
     text = myfont.render(str(score), False, white)
@@ -213,6 +263,7 @@ def gameplay():
 
     #balls = n
     
+>>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
 
 while True:
     
@@ -220,17 +271,10 @@ while True:
     clock.tick(60)
     
     for event in pygame.event.get():
-        
-        screen1()
-        screen2()
-        player()
-        
-        
-        #music
+        mouse = event.type == pygame.MOUSEMOTION
+        if mouse == False:
+            game()
 
-        #exit
-        if event.type==pygame.QUIT:
-            pygame.mixer.music.stop()
-            pygame.quit()
-            quit()
+        leave()
+            
     pygame.display.update()
