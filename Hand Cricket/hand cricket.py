@@ -1,13 +1,5 @@
-#modules
-from re import X
-import time
-from tokenize import cookie_re
-from tracemalloc import start
 import pygame  
 import random
-import sys
-import os
-
 #from pygame.locals import *
 
 #pygame clock
@@ -28,15 +20,9 @@ width = 350
 screen = pygame.display.set_mode((height, width))  
 pygame.display.set_caption('HAND CRICKET') 
 
-<<<<<<< HEAD
 name = input("Enter your name: ")
 
 #images
-=======
-#IMAGES
-
-#background
->>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
 bg_blur = pygame.image.load(r"Hand Cricket\bg_blur.png")
 
 #numbers
@@ -98,11 +84,7 @@ def screen2():
 
 out = 0
 def outscreen():
-<<<<<<< HEAD
     global out
-=======
-
->>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
     r = int(random.randint(1,7))
 
     if r == 1:
@@ -127,7 +109,6 @@ def outscreen():
         screen.blit(out7, (0,0))
     out = 1
 
-<<<<<<< HEAD
 def gameplay(a):
     global out
     global score
@@ -142,13 +123,6 @@ def gameplay(a):
             font()
         break
     #balls = n
-=======
-def music():
-
-    #music
-    pygame.mixer.music.load("Hand Cricket\Wii_music.mp3")
-    pygame.mixer.music.play(-1)
->>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
 
 #variables
 a = 0
@@ -218,7 +192,6 @@ def player():
             a = 10
             gameplay(a)
     
-<<<<<<< HEAD
 def font():
     myfont = pygame.font.SysFont('Comic Sans MS', 50)
     text = myfont.render(str(score), True, white)
@@ -234,36 +207,6 @@ def leave():
     if event.type == pygame.QUIT:
         pygame.quit()
         quit()
-=======
-    myfont = pygame.font.SysFont('Comic Sans MS', 30)
-
-    text = myfont.render(str(score), False, white)
-
-    textRect = text.get_rect()
-
-    screen.blit(text, textRect)
-
-    #update the screen
-    pygame.display.update()
-
-def gameplay():
-    global a
-    global score
-    b = int(random.randint(1,10))
-
-    #score = 0
-
-    n = 0
-    while True:
-        n += 1
-        if a == b:
-            outscreen()
-        else:
-            score = score + a
-
-    #balls = n
-    
->>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
 
 while True:
     
