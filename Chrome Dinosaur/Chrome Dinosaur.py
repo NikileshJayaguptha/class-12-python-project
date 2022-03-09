@@ -1,6 +1,6 @@
 import pygame
 import os
-
+import random
 #! initialising
 pygame.init()
 
@@ -24,6 +24,17 @@ Running = [
 Ducking = [
 	pygame.image.load(os.path.join("Chrome Dinosaur/assets/Dino","DinoDuck1.png")),
 	pygame.image.load(os.path.join("Chrome Dinosaur/assets/Dino","DinoDuck2.png"))
+]
+
+cactus = [	pygame.image.load(os.path.join("Chrome Dinosaur/assets/Cactus","Cactus1.png")),
+		  	pygame.image.load(os.path.join("Chrome Dinosaur/assets/Cactus","Cactus2.png")),
+			pygame.image.load(os.path.join("Chrome Dinosaur/assets/Cactus","Cactus3.png")),
+			pygame.image.load(os.path.join("Chrome Dinosaur/assets/Cactus","Cactus4.png")),
+			pygame.image.load(os.path.join("Chrome Dinosaur/assets/Cactus","Cactus5.png")),
+			pygame.image.load(os.path.join("Chrome Dinosaur/assets/Cactus","Cactus6.png"))]
+Birdlist = [
+	pygame.image.load(os.path.join("Chrome Dinosaur/assets/Bird","Bird1.png")),
+	pygame.image.load(os.path.join("Chrome Dinosaur/assets/Bird","Bird2.png"))
 ]
 
 bg = pygame.image.load(os.path.join("Chrome Dinosaur/assets/Other","Track.png"))
@@ -81,9 +92,10 @@ class Dino():
 
 	def update(self, duck,jump):
 		if not duck:
-			if not self.isJumping and jump:
+			if not self.isJumping and jump :
 				self.vel = -self.jumpHeight
 				self.isJumping = True
+				
 
 			self.vel += self.gravity
 			if self.vel >= self.jumpHeight:
@@ -96,7 +108,7 @@ class Dino():
 	
 	
 			
-		if duck:
+		if duck :
 			self.run_count+=1
 			if self.run_count+1>=6:
 				self.index = (self.index+1) % len(self.ducklist)
@@ -130,14 +142,53 @@ class Dino():
 class Cactus(pygame.sprite.Sprite):
 	def __init__(self,type):
 		super(Cactus,self).__init__()
-	
-	
 
+		self.caclist = cactus
+	
+		self.image = self.caclist[type-1]
+		self.rect = self.image.get_rect()
+		self.rect.x = width
+		self.rect.bottom = 420
+	
+	def update(self,speed):
+		self.rect.x -= speed
+		if self.rect.right<=0:
+			self.kill()
+	
+	def draw(self,win):
+		win.blit(self.image,self.rect)
+	
+	
+#!bird class
+class Bird(pygame.sprite.Sprite):
+	def __init__(self,x,y):
+		super(Bird,self).__init__()
+
+		self.image_list = Birdlist
+
+		self.index = 0
+		self.image = self.image_list[self.index]
+		self.rect = self.image.get_rect(center = (x,y))
+		self.counter = 0
+	
+	def update(self,speed):
+		self.rect.x -= speed
+		if self.rect.right <= 0:
+			self.kill()
+
+		self.counter += 1
+		if self.counter >= 6:
+			self.index = (self.index + 1) % len(self.image_list)
+			self.image = self.image_list[self.index]
+			self.counter = 0
+	
+	def draw(self,win):
+		win.blit(self.image,self.rect)
 
 #! animation functions
 def groundanimation():
 	ground.draw(WIN)
-	ground.update(6)
+	ground.update(9)
 
 def dinoanimation():
 	global duck
@@ -149,9 +200,37 @@ def dinoanimation():
 	dino.draw(WIN)
 	dino.update(duck,jump)
 
+def enemyanimation():
+	global counter
+	enemy_timer = 60
+	counter+=1
+	if counter % enemy_timer == 0:
+		if random.randint(1,5) == 2:
+			y = random.choice([380,290])
+			bird = Bird(width,y)
+			birdgrp.add(bird)
+		else:
+			type = random.randint(1,6)
+			cactus = Cactus(type)
+			cacgrp.add(cactus)
+	
+	birdgrp.update(12)
+	birdgrp.draw(WIN)
+
+	cacgrp.update(9)
+	cacgrp.draw(WIN)
+
+
+
 #! object initialisation
 ground = Ground()
 dino = Dino(50,320)
+
+
+#! pygame group
+cacgrp = pygame.sprite.Group()
+birdgrp = pygame.sprite.Group()
+
 
 #! Colours
 WHITE = (255,255,255)
@@ -163,8 +242,13 @@ def draw_window():
 	#! ground animation
 	groundanimation()
 
+	#! cactus animation
+	enemyanimation()
+
 	#!dino animation
 	dinoanimation()
+
+	
 
 	#!updating the window
 	pygame.display.update()
@@ -175,6 +259,8 @@ clock = pygame.time.Clock()
 FPS= 30
 duck = False
 jump = False
+counter = 0 
+
 
 
 #! main loop
@@ -190,7 +276,7 @@ while run:
 	#! key bindings
 	keys = pygame.key.get_pressed()
 
-	if keys[pygame.K_DOWN]:
+	if keys[pygame.K_DOWN] and not dino.isJumping:
 		duck = True
 	else:
 		duck =False

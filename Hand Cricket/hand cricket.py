@@ -7,7 +7,11 @@ import sys
 import os
 
 #from pygame.locals import *
+
+#pygame clock
 clock = pygame.time.Clock()
+
+#game initialisation
 pygame.init()  
 
 #colors
@@ -15,13 +19,16 @@ white = (226, 229, 222)
 
 #dimensions
 height = 600 
+
 width = 350
 
 #display
 screen = pygame.display.set_mode((height, width))  
 pygame.display.set_caption('HAND CRICKET') 
 
-#images
+#IMAGES
+
+#background
 bg_blur = pygame.image.load(r"Hand Cricket\bg_blur.png")
 
 #numbers
@@ -45,10 +52,12 @@ out5 = pygame.image.load(r"Hand Cricket\out5.png")
 out6 = pygame.image.load(r"Hand Cricket\out6.png")
 out7 = pygame.image.load(r"Hand Cricket\out7.png")
 
+#other images
 equal = pygame.image.load(r"Hand Cricket\equal_to.png")
 total = pygame.image.load(r"Hand Cricket\total.png")
 exit_button = pygame.image.load(r"Hand Cricket\buttons\leave.png")
 
+#screen1
 def screen1():
 
     screen.fill(white)  
@@ -66,10 +75,12 @@ def screen1():
     screen.blit(nine_image, (320,120))
     screen.blit(ten_image, (420,120))
 
+
     screen.blit(equal, (375,275))
     screen.blit(total, (220,260))
     screen.blit(exit_button, (20, 250))
 
+#screen2
 def screen2():
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
@@ -78,27 +89,37 @@ def screen2():
             quit()
 
 def outscreen():
+
     r = int(random.randint(1,7))
+
     if r == 1:
         screen.blit(out1, (0,0))
+
     elif r == 2:
         screen.blit(out2, (0,0))
+
     elif r == 3:
         screen.blit(out3, (0,0))
+
     elif r == 4:
         screen.blit(out4, (0,0))
+
     elif r == 5:
         screen.blit(out5, (0,0))
+
     elif r == 6:
         screen.blit(out6, (0,0))
+
     elif r == 7:
         screen.blit(out7, (0,0))
 
 def music():
+
     #music
     pygame.mixer.music.load("Hand Cricket\Wii_music.mp3")
     pygame.mixer.music.play(-1)
 
+<<<<<<< HEAD
 def gameplay(a):
     #global a
     global score
@@ -116,11 +137,16 @@ def gameplay(a):
         break
     #balls = n
 
+=======
+#variables
+>>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
 a = 0
 score = 0
+
 def player():
     global a
     global score
+
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if one_image.get_rect().collidepoint(x-25,y-25):
@@ -181,6 +207,7 @@ def player():
             a = 10
             gameplay(a)
     
+<<<<<<< HEAD
 def font():
     myfont = pygame.font.SysFont('Comic Sans MS', 50)
     text = myfont.render(str(score), True, white)
@@ -191,6 +218,36 @@ def game():
     screen1()
     screen2()
     player()
+=======
+    myfont = pygame.font.SysFont('Comic Sans MS', 30)
+
+    text = myfont.render(str(score), False, white)
+
+    textRect = text.get_rect()
+
+    screen.blit(text, textRect)
+
+    #update the screen
+    pygame.display.update()
+
+def gameplay():
+    global a
+    global score
+    b = int(random.randint(1,10))
+
+    #score = 0
+
+    n = 0
+    while True:
+        n += 1
+        if a == b:
+            outscreen()
+        else:
+            score = score + a
+
+    #balls = n
+    
+>>>>>>> 1d26bfbdb0ac4272d0fc3000b84a4cc0d235b5db
 
 while True:
     
