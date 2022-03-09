@@ -1,4 +1,6 @@
 #modules
+from re import X
+import time
 import pygame  
 import random
 import sys
@@ -97,6 +99,23 @@ def music():
     pygame.mixer.music.load("Hand Cricket\Wii_music.mp3")
     pygame.mixer.music.play(-1)
 
+def gameplay(a):
+    #global a
+    global score
+    b = int(random.randint(1,10))
+    #score = 0
+    #n = 0
+    while True:
+        #n += 1
+        if a == b:
+            outscreen()
+
+        else:
+            score = score + a
+            font()
+        break
+    #balls = n
+
 a = 0
 score = 0
 def player():
@@ -106,82 +125,72 @@ def player():
         x , y = pygame.mouse.get_pos()
         if one_image.get_rect().collidepoint(x-25,y-25):
             a = 1
-            gameplay()
+            gameplay(a)
     
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if two_image.get_rect().collidepoint(x-125,y-25):
             a = 2
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if three_image.get_rect().collidepoint(x-225,y-25):
             a = 3
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if four_image.get_rect().collidepoint(x-325,y-25):
             a = 4
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if five_image.get_rect().collidepoint(x-425,y-25):
             a = 5
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if six_image.get_rect().collidepoint(x-25,y-125):
             a = 6
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if seven_image.get_rect().collidepoint(x-125,y-125):
             a = 7
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if eight_image.get_rect().collidepoint(x-225,y-125):
             a = 8
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if nine_image.get_rect().collidepoint(x-325,y-125):
             a = 9
-            gameplay()
+            gameplay(a)
 
     if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
         x , y = pygame.mouse.get_pos()
         if ten_image.get_rect().collidepoint(x-425,y-125):
             a = 10
-            gameplay()
+            gameplay(a)
     
-    myfont = pygame.font.SysFont('Comic Sans MS', 30)
-    text = myfont.render(str(score), False, white)
-    textRect = text.get_rect()
-    screen.blit(text, textRect)
+def font():
+    myfont = pygame.font.SysFont('Comic Sans MS', 50)
+    text = myfont.render(str(score), True, white)
+    screen.blit(text, (425,250))
     pygame.display.update()
 
-def gameplay():
-    global a
-    global score
-    b = int(random.randint(1,10))
-    #score = 0
-    n = 0
-    while True:
-        n += 1
-        if a == b:
-            outscreen()
-        else:
-            score = score + a
-    #balls = n
-    
+def game():
+    screen1()
+    screen2()
+    player()
 
 while True:
     
@@ -189,17 +198,16 @@ while True:
     clock.tick(60)
     
     for event in pygame.event.get():
+        mouse = event.type == pygame.MOUSEMOTION
+        if mouse == False:
+            game()
         
-        screen1()
-        screen2()
-        player()
-        
-        
-        #music
+            #music
 
-        #exit
-        if event.type==pygame.QUIT:
-            pygame.mixer.music.stop()
-            pygame.quit()
-            quit()
+            #exit
+            if event.type==pygame.QUIT:
+                pygame.mixer.music.stop()
+                pygame.quit()
+                quit()
+            
     pygame.display.update()
