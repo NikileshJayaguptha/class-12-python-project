@@ -1,3 +1,4 @@
+import sqlite3
 import pygame  
 import random
 #from pygame.locals import *
@@ -221,3 +222,5 @@ while True:
         leave()
             
     pygame.display.update()
+
+#sql
