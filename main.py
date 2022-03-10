@@ -7,7 +7,7 @@ from Chrome_Dinosaur.Chrome_Dinosaur import chromedinosaur
 from Hand_Cricket.hand_cricket import handcricket
 from Space_Invader.spaceinvader import spaceinvader
 
-from matplotlib import image
+
 
 window = Tk()
 
