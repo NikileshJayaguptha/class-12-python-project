@@ -3,6 +3,10 @@ from turtle import back
 from PIL import ImageTk,Image
 
 
+from Chrome_Dinosaur.Chrome_Dinosaur import chromedinosaur
+from Hand_Cricket.hand_cricket import handcricket
+from Space_Invader.spaceinvader import spaceinvader
+
 from matplotlib import image
 
 window = Tk()
@@ -14,6 +18,7 @@ handcricketimg = ImageTk.PhotoImage(Image.open("guiassets/Handcricket.png"))
 
 text_list = ["Chrome Dinosaur","Space Invader","Handcricket"]
 
+funclist = [chromedinosaur,spaceinvader,handcricket]
 s = 0
 imagelist = [chromedinoimage,spaceinvaderimg,handcricketimg]
 
@@ -23,7 +28,7 @@ imagelabel = Label(image=chromedinoimage)
 imagelabel.grid(row = 0,column=0,columnspan=3)
 
 #!Button
-textlabel = Button(text = text_list[0])
+textlabel = Button(text = text_list[0], command=funclist[0])
 textlabel.grid(row = 1,column=0,columnspan=3)
 
 
@@ -43,7 +48,7 @@ def forward():
 		imagelabel = Label(image=imagelist[s])
 
 		textlabel.grid_forget()
-		textlabel = Button(text=text_list[s])
+		textlabel = Button(text=text_list[s], command=funclist[s])
 		
 		textlabel.grid(row = 1,column=0,columnspan=3)
 		imagelabel.grid(row = 0,column=0,columnspan=3)
@@ -59,7 +64,7 @@ def backward():
 	s-=1
 	if s<l and s>=0:
 		textlabel.grid_forget()
-		textlabel = Button(text=text_list[s])
+		textlabel = Button(text=text_list[s],command=funclist[s])
 		
 		imagelabel.grid_forget()
 		imagelabel = Label(image=imagelist[s])
