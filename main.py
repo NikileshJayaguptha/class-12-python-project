@@ -7,11 +7,6 @@ from Chrome_Dinosaur.Chrome_Dinosaur import chromedinosaur
 from Hand_Cricket.hand_cricket import handcricket
 from Space_Invader.spaceinvader import spaceinvader
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 6d264eae5f344c37960c43914d43bb558bc7dd27
 window = Tk()
 
 #!load images

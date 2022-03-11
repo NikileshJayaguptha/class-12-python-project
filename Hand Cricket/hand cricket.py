@@ -207,7 +207,6 @@ def game():
 def leave():
     if event.type == pygame.QUIT:
         pygame.quit()
-        quit()
 
 while True:
     
