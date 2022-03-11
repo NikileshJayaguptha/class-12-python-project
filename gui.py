@@ -1,0 +1,91 @@
+from tkinter import *
+from DB import cursor,mydb
+from main import mainpy
+
+a =""
+root = Tk()
+root.geometry('500x200')
+def login():
+	login_button.destroy()
+	signup_button.destroy()
+
+	username_label = Label(root,text = "Username")
+	username_label.place(relx = 0.15,rely = 0.25, anchor = CENTER)
+
+	username_entry = Entry(root,font = ('Arial 16'))
+	username_entry.place(relx = 0.5,rely = 0.25, anchor = CENTER )
+
+	password_label = Label(root,text = "Password")
+	password_label.place(relx = 0.15,rely = 0.5, anchor = CENTER)
+
+	password_entry = Entry(root,font = ('Arial 16'))
+	password_entry.place(relx = 0.5,rely = 0.5, anchor = CENTER )
+
+
+
+
+	def submit():
+
+		cursor.execute(f"select password from users where username='{username_entry.get()}'")
+
+		for i in cursor:
+			if i[0] == password_entry.get():
+				root.destroy()
+				mainpy()
+
+
+
+	submit_button = Button(root,text = "submit", command = submit)
+	submit_button.place(relx = 0.5,rely = 0.75, anchor = CENTER)
+
+
+def signup():
+	username_label = Label(root,text = "Username")
+	username_label.place(relx = 0.15,rely = 0.25, anchor = CENTER)
+
+	username_entry = Entry(root,font = ('Arial 16'))
+	username_entry.place(relx = 0.5,rely = 0.25, anchor = CENTER )
+
+	password_label = Label(root,text = "Password")
+	password_label.place(relx = 0.15,rely = 0.5, anchor = CENTER)
+
+	password_entry = Entry(root,font = ('Arial 16'))
+	password_entry.place(relx = 0.5,rely = 0.5, anchor = CENTER )
+
+	name_entry = Entry(root,font = ('Arial 16'))
+	name_entry.place(relx = 0.5,rely = 0.75, anchor = CENTER )
+
+	name_label = Label(root,text = "Name")
+	name_label.place(relx = 0.15,rely = 0.75, anchor = CENTER)
+
+
+	
+	def submit():
+		cursor.execute(f"insert into users values('{username_entry.get()}','{password_entry.get()}','{name_entry.get()}')")
+		mydb.commit()
+		username_label.destroy()
+		username_entry.destroy()
+		password_entry.destroy()
+		password_label.destroy()
+		name_entry.destroy()
+		name_label.destroy()
+		submit_button.destroy()
+		login()
+
+	submit_button = Button(root,text = "submit", command = submit)
+	submit_button.place(relx = 0.5,rely = 0.925, anchor = CENTER)
+
+
+
+
+login_button = Button(root,text="Login",command = login) 
+signup_button = Button(root,text="Signup",command = signup) 
+
+login_button.place(relx = 0.5,rely = 0.5, anchor = CENTER)
+signup_button.place(relx = 0.5,rely = 0.25, anchor = CENTER)
+
+
+
+
+
+root.mainloop()

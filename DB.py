@@ -4,7 +4,7 @@ mydb = mysql.connector.connect(host = "sql6.freemysqlhosting.net",user = "sql647
 
 cursor = mydb.cursor()
 
-cursor.execute("select * from test;")
+cursor.execute("select password from users where username = 'abc';")
 
 for i in cursor:
-	print(i[0])
+	print(i)
