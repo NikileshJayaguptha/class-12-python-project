@@ -18,7 +18,9 @@ handcricketimg = ImageTk.PhotoImage(Image.open("guiassets/Handcricket.png"))
 text_list = ["Chrome Dinosaur","Space Invader","Handcricket"]
 
 funclist = [chromedinosaur,spaceinvader,handcricket]
+
 s = 0
+
 imagelist = [chromedinoimage,spaceinvaderimg,handcricketimg]
 
 
