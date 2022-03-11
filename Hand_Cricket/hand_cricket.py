@@ -208,7 +208,6 @@ def handcricket():
     def leave():
         if event.type == pygame.QUIT:
             pygame.quit()
-            quit()
 
     while True:
         
