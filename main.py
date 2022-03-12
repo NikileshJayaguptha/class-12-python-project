@@ -15,6 +15,7 @@ def mainpy():
 
 	window = Tk()
 
+
 	#!load images
 	chromedinoimage = ImageTk.PhotoImage(Image.open("guiassets/chrome dinosaur.png"))
 	spaceinvaderimg = ImageTk.PhotoImage(Image.open("guiassets/space invader.png"))

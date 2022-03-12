@@ -1,6 +1,8 @@
 from tkinter import *
 from DB import cursor,mydb
 from main import mainpy
+import bcrypt
+
 
 a =""
 root = Tk()
@@ -26,10 +28,15 @@ def login():
 
 	def submit():
 
-		cursor.execute(f"select password from users where username='{username_entry.get()}'")
+		username = username_entry.get()
+
+		cursor.execute(f"select password from users where username='{username}'")
 
 		for i in cursor:
-			if i[0] == password_entry.get():
+			hashedpwd = bytes(i[0],'utf-8')
+			password = password_entry.get()
+			password = bytes(password,'utf-8')
+			if bcrypt.checkpw(password,hashedpwd):
 				root.destroy()
 				mainpy()
 
@@ -61,8 +68,20 @@ def signup():
 
 	
 	def submit():
-		cursor.execute(f"insert into users values('{username_entry.get()}','{password_entry.get()}','{name_entry.get()}')")
+		salt = bcrypt.gensalt()
+
+		username = username_entry.get()
+		password = password_entry.get()
+		#hash password
+		password = bytes(password,"utf-8")
+		password = bcrypt.hashpw(password,salt)
+		password = password.decode()
+
+		name = name_entry.get()
+		
+		cursor.execute(f'insert into users values("{username}","{password}","{name}")')
 		mydb.commit()
+
 		username_label.destroy()
 		username_entry.destroy()
 		password_entry.destroy()
@@ -83,9 +102,6 @@ signup_button = Button(root,text="Signup",command = signup)
 
 login_button.place(relx = 0.5,rely = 0.5, anchor = CENTER)
 signup_button.place(relx = 0.5,rely = 0.25, anchor = CENTER)
-
-
-
 
 
 root.mainloop()
