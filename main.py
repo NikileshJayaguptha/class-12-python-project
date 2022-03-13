@@ -1,12 +1,13 @@
 from tkinter import *
-from turtle import back
 from PIL import ImageTk,Image
 
-def mainpy():
+def mainpy(id1):
+	global c
 	global s
 	global l
 	global imagelabel
 	global textlabel
+
 	
 	from Chrome_Dinosaur.Chrome_Dinosaur import chromedinosaur
 	from Hand_Cricket.hand_cricket import handcricket
@@ -35,7 +36,7 @@ def mainpy():
 	imagelabel.grid(row = 0,column=0,columnspan=3)
 
 	#!Button
-	textlabel = Button(text = text_list[0], command=funclist[0])
+	textlabel = Button(text = text_list[0], command=lambda:funclist[0](id1))
 	textlabel.grid(row = 1,column=0,columnspan=3)
 
 
@@ -55,7 +56,9 @@ def mainpy():
 			imagelabel = Label(image=imagelist[s])
 
 			textlabel.grid_forget()
-			textlabel = Button(text=text_list[s], command=funclist[s])
+			textlabel = Button(text=text_list[s], command= lambda:funclist[s](id1))
+
+
 			
 			textlabel.grid(row = 1,column=0,columnspan=3)
 			imagelabel.grid(row = 0,column=0,columnspan=3)

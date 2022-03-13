@@ -2,7 +2,7 @@ from tkinter import *
 from DB import cursor,mydb
 from main import mainpy
 import bcrypt
-
+import random
 
 a =""
 root = Tk()
@@ -30,7 +30,7 @@ def login():
 
 		username = username_entry.get()
 
-		cursor.execute(f"select password from users where username='{username}'")
+		cursor.execute(f"select password,id from users where username='{username}'")
 
 		for i in cursor:
 			hashedpwd = bytes(i[0],'utf-8')
@@ -38,7 +38,7 @@ def login():
 			password = bytes(password,'utf-8')
 			if bcrypt.checkpw(password,hashedpwd):
 				root.destroy()
-				mainpy()
+				mainpy(i[1])
 
 
 
@@ -70,6 +70,21 @@ def signup():
 	def submit():
 		salt = bcrypt.gensalt()
 
+		# id for users
+		cursor.execute("select id from users;")
+
+		id1 = 0
+		idlist = [0]
+
+		for i in cursor:
+			idlist.append(i[0])
+
+		while id1 in idlist:
+			id1 = random.randint(0,100000)
+
+
+
+
 		username = username_entry.get()
 		password = password_entry.get()
 		#hash password
@@ -79,7 +94,7 @@ def signup():
 
 		name = name_entry.get()
 		
-		cursor.execute(f'insert into users values("{username}","{password}","{name}")')
+		cursor.execute(f'insert into users values("{username}","{password}","{name}","{id1}")')
 		mydb.commit()
 
 		username_label.destroy()

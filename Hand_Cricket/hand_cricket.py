@@ -1,7 +1,8 @@
-def handcricket(): 
+def handcricket(id): 
     global score
     import pygame  
     import random
+    import time
     #from pygame.locals import *
 
     #pygame clock
@@ -22,7 +23,6 @@ def handcricket():
     screen = pygame.display.set_mode((height, width))  
     pygame.display.set_caption('HAND CRICKET') 
 
-    name = input("Enter your name: ")
 
     #images
     bg_blur = pygame.image.load(r"Hand_Cricket\bg_blur.png")
@@ -91,24 +91,47 @@ def handcricket():
 
         if r == 1:
             screen.blit(out1, (0,0))
+            print(score)
+            time.sleep(2)
+            pygame.quit()
 
         elif r == 2:
             screen.blit(out2, (0,0))
+            print(score)
+            time.sleep(2)
+            pygame.quit()
 
         elif r == 3:
             screen.blit(out3, (0,0))
+            print(score)
+            time.sleep(2)
+            pygame.quit()
 
         elif r == 4:
             screen.blit(out4, (0,0))
+            print(score)
+            time.sleep(2)
+            pygame.quit()
 
         elif r == 5:
             screen.blit(out5, (0,0))
+            print(score)
+            time.sleep(2)
+            pygame.quit()
 
         elif r == 6:
             screen.blit(out6, (0,0))
+            print(score)
+            time.sleep(2)
+            pygame.quit()
+
 
         elif r == 7:
             screen.blit(out7, (0,0))
+            print(score)
+            time.sleep(2)
+            pygame.quit()
+        
         out = 1
 
     def gameplay(a):
@@ -208,8 +231,10 @@ def handcricket():
     def leave():
         if event.type == pygame.QUIT:
             pygame.quit()
+            
 
-    while True:
+    run = True
+    while run:
         
         #60 fps
         clock.tick(60)

@@ -1,9 +1,11 @@
-def spaceinvader():
+lvl=0
+def spaceinvader(id1):
 	from tkinter import N
 	import pygame
 	import os
 	import time
 	import random
+	from DB import cursor,mydb 
 	pygame.font.init()
 	#* window setup
 
@@ -47,6 +49,8 @@ def spaceinvader():
 			self.max_health = health
 			self.lasers = []
 			self.cd =0
+
+			self.db=False
 			
 
 		def draw(self,window):
@@ -105,6 +109,8 @@ def spaceinvader():
 			self.mask = pygame.mask.from_surface(self.img)
 			self.max_health = health
 			self.lasers = []
+
+			
 
 		def cooldown(self):
 			if self.cd >= self.COOLDOWN:
@@ -182,6 +188,13 @@ def spaceinvader():
 		if gameover == True:
 			llabel = lostfont.render("GAME OVER!!",1,(255,255,255))
 			WIN.blit(llabel,(350-llabel.get_width()/2,350))
+
+			if not mainship.db:
+				cursor.execute(f"insert into scores values('{id1}','{lvl}','spaceinvader')")
+				mydb.commit()
+				mainship.db = True
+
+
 		
 		
 		pygame.display.update()
@@ -207,6 +220,7 @@ def spaceinvader():
 
 	#* mainloop
 	while run:
+
 		#!FPS
 		clock.tick(fps)
 		#! endgame

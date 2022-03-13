@@ -1,4 +1,5 @@
-def chromedinosaur():
+SCORE = 0
+def chromedinosaur(id1):
 	global SCORE
 	global SPEED
 	global counter
@@ -7,6 +8,7 @@ def chromedinosaur():
 	import pygame
 	import os
 	import random
+	from DB import cursor,mydb 
 
 	#!font setup
 	pygame.font.init()
@@ -97,6 +99,8 @@ def chromedinosaur():
 			self.rect.x = self.x
 			self.rect.y = self.y
 
+			self.db = False
+
 			#! mask for collision detection
 			self.mask = pygame.mask.from_surface(self.img)	
 
@@ -152,7 +156,10 @@ def chromedinosaur():
 						self.run_count=0
 			else:
 				self.img = self.deadimg
-				
+				if not self.db:
+					cursor.execute(f"insert into scores values('{id1}','{SCORE}','chromedinosaur')")
+					mydb.commit()
+					self.db = True				
 		def draw(self,win):
 			win.blit(self.img,self.rect)	
 
@@ -348,6 +355,7 @@ def chromedinosaur():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				run = False
+				
 		#! key bindings
 		keys = pygame.key.get_pressed()
 
