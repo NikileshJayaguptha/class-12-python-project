@@ -1,4 +1,4 @@
-from tkinter import *
+import tkinter 
 from PIL import ImageTk,Image
 
 def mainpy(id1):

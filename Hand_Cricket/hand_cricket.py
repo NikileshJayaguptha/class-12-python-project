@@ -1,5 +1,6 @@
 def handcricket(id): 
     global score
+    import sys
     import pygame  
     import random
     import time
@@ -84,65 +85,73 @@ def handcricket(id):
                 pygame.quit()
                 quit()
 
-    out = 0
-    def outscreen():
-        global out
-        r = int(random.randint(1,7))
+    #out = 0
+    r = int(random.randint(1,7))
+    def outscreen(r):
+        #global out
+        #r = int(random.randint(1,7))
 
         if r == 1:
             screen.blit(out1, (0,0))
+            pygame.display.update()
             print(score)
             time.sleep(2)
-            pygame.quit()
+            sys.exit()
 
         elif r == 2:
             screen.blit(out2, (0,0))
+            pygame.display.update()
             print(score)
             time.sleep(2)
-            pygame.quit()
+            sys.exit()
 
         elif r == 3:
             screen.blit(out3, (0,0))
+            pygame.display.update()
             print(score)
             time.sleep(2)
-            pygame.quit()
+            sys.exit()
 
         elif r == 4:
             screen.blit(out4, (0,0))
+            pygame.display.update()
             print(score)
             time.sleep(2)
-            pygame.quit()
+            sys.exit()
 
         elif r == 5:
             screen.blit(out5, (0,0))
+            pygame.display.update()
             print(score)
             time.sleep(2)
-            pygame.quit()
+            sys.exit()
 
         elif r == 6:
             screen.blit(out6, (0,0))
+            pygame.display.update()
             print(score)
             time.sleep(2)
-            pygame.quit()
+            sys.exit()
 
 
         elif r == 7:
             screen.blit(out7, (0,0))
+            pygame.display.update()
             print(score)
             time.sleep(2)
-            pygame.quit()
+            sys.exit()
         
-        out = 1
+        #out = 1
 
     def gameplay(a):
-        global out
+        #global out
         global score
         b = int(random.randint(1,10))
         #n = 0
         while True:
             #n += 1
             if a == b:
-                outscreen()
+                outscreen(r)
             else:
                 score = score + a
                 font()
@@ -247,3 +256,4 @@ def handcricket(id):
             leave()
                 
         pygame.display.update()
+handcricket(id)
