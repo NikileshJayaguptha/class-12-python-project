@@ -1,10 +1,14 @@
-def handcricket(id): 
+def handcricket(id1): 
     global score
     import sys
     import pygame  
     import random
     import time
+    from DB import cursor,mydb
     #from pygame.locals import *
+
+
+    dbadd = False
 
     #pygame clock
     clock = pygame.time.Clock()
@@ -54,206 +58,244 @@ def handcricket(id):
     total = pygame.image.load(r"Hand_Cricket\total.png")
     exit_button = pygame.image.load(r"Hand_Cricket\buttons\leave.png")
 
-    #screen1
-    def screen1():
+    try:
+        #screen1
+        def screen1():
 
-        screen.fill(white)  
-        screen.blit(bg_blur, (0, 0))
+            screen.fill(white)  
+            screen.blit(bg_blur, (0, 0))
 
-        #numbers display
-        screen.blit(one_image, (20,20))
-        screen.blit(two_image, (120,20))
-        screen.blit(three_image, (220,20))
-        screen.blit(four_image, (320,20))
-        screen.blit(five_image, (420,20))
-        screen.blit(six_image, (20,120))
-        screen.blit(seven_image, (120,120))
-        screen.blit(eight_image, (220,120))
-        screen.blit(nine_image, (320,120))
-        screen.blit(ten_image, (420,120))
+            #numbers display
+            screen.blit(one_image, (20,20))
+            screen.blit(two_image, (120,20))
+            screen.blit(three_image, (220,20))
+            screen.blit(four_image, (320,20))
+            screen.blit(five_image, (420,20))
+            screen.blit(six_image, (20,120))
+            screen.blit(seven_image, (120,120))
+            screen.blit(eight_image, (220,120))
+            screen.blit(nine_image, (320,120))
+            screen.blit(ten_image, (420,120))
 
 
-        screen.blit(equal, (375,275))
-        screen.blit(total, (220,260))
-        screen.blit(exit_button, (20, 250))
+            screen.blit(equal, (375,275))
+            screen.blit(total, (220,260))
+            screen.blit(exit_button, (20, 250))
 
-    #screen2
-    def screen2():
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if exit_button.get_rect().collidepoint(x-25,y-250):
+        #screen2
+        def screen2():
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
+                if exit_button.get_rect().collidepoint(x-25,y-250):
+                    pygame.quit()
+                    quit()
+
+        #out = 0
+        r = int(random.randint(1,7))
+        def outscreen(r):
+            global dbadd
+            #global out
+            #r = int(random.randint(1,7))
+
+            dbadd = False
+            if r == 1:
+                screen.blit(out1, (0,0))
+                pygame.display.update()
+
+                if not dbadd:
+                    cursor.execute(f"insert into scores values('{id1}','{score}','handcricket')")
+                    mydb.commit()
+                    dbadd =False
+                time.sleep(2)
                 pygame.quit()
-                quit()
 
-    #out = 0
-    r = int(random.randint(1,7))
-    def outscreen(r):
-        #global out
-        #r = int(random.randint(1,7))
+            elif r == 2:
+                screen.blit(out2, (0,0))
+                pygame.display.update()
+                if not dbadd:
+                    cursor.execute(f"insert into scores values('{id1}','{score}','handcricket')")
+                    mydb.commit()
+                    dbadd =False
+                time.sleep(2)
+                pygame.quit()
 
-        if r == 1:
-            screen.blit(out1, (0,0))
-            pygame.display.update()
-            print(score)
-            time.sleep(2)
-            sys.exit()
+            elif r == 3:
+                screen.blit(out3, (0,0))
+                pygame.display.update()
+                if not dbadd:
+                    cursor.execute(f"insert into scores values('{id1}','{score}','handcricket')")
+                    mydb.commit()
+                    dbadd =False
+                time.sleep(2)
+                pygame.quit()
 
-        elif r == 2:
-            screen.blit(out2, (0,0))
-            pygame.display.update()
-            print(score)
-            time.sleep(2)
-            sys.exit()
+            elif r == 4:
+                screen.blit(out4, (0,0))
+                pygame.display.update()
+                if not dbadd:
+                    cursor.execute(f"insert into scores values('{id1}','{score}','handcricket')")
+                    mydb.commit()
+                    dbadd =False
+                time.sleep(2)
+                pygame.quit()
 
-        elif r == 3:
-            screen.blit(out3, (0,0))
-            pygame.display.update()
-            print(score)
-            time.sleep(2)
-            sys.exit()
+            elif r == 5:
+                screen.blit(out5, (0,0))
+                pygame.display.update()
+                if not dbadd:
+                    cursor.execute(f"insert into scores values('{id1}','{score}','handcricket')")
+                    mydb.commit()
+                    dbadd =False
+                time.sleep(2)
+                pygame.quit()
 
-        elif r == 4:
-            screen.blit(out4, (0,0))
-            pygame.display.update()
-            print(score)
-            time.sleep(2)
-            sys.exit()
-
-        elif r == 5:
-            screen.blit(out5, (0,0))
-            pygame.display.update()
-            print(score)
-            time.sleep(2)
-            sys.exit()
-
-        elif r == 6:
-            screen.blit(out6, (0,0))
-            pygame.display.update()
-            print(score)
-            time.sleep(2)
-            sys.exit()
+            elif r == 6:
+                screen.blit(out6, (0,0))
+                pygame.display.update()
+                if not dbadd:
+                    cursor.execute(f"insert into scores values('{id1}','{score}','handcricket')")
+                    mydb.commit()
+                    dbadd =False
+                time.sleep(2)
+                pygame.quit()
 
 
-        elif r == 7:
-            screen.blit(out7, (0,0))
-            pygame.display.update()
-            print(score)
-            time.sleep(2)
-            sys.exit()
-        
-        #out = 1
-
-    def gameplay(a):
-        #global out
-        global score
-        b = int(random.randint(1,10))
-        #n = 0
-        while True:
-            #n += 1
-            if a == b:
-                outscreen(r)
-            else:
-                score = score + a
-                font()
-            break
-        #balls = n
-
-    #variables
-    a = 0
-    score = 0
-
-    def player():
-        global a
-        global score
-
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if one_image.get_rect().collidepoint(x-25,y-25):
-                a = 1
-                gameplay(a)
-        
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if two_image.get_rect().collidepoint(x-125,y-25):
-                a = 2
-                gameplay(a)
-
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if three_image.get_rect().collidepoint(x-225,y-25):
-                a = 3
-                gameplay(a)
-
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if four_image.get_rect().collidepoint(x-325,y-25):
-                a = 4
-                gameplay(a)
-
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if five_image.get_rect().collidepoint(x-425,y-25):
-                a = 5
-                gameplay(a)
-
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if six_image.get_rect().collidepoint(x-25,y-125):
-                a = 6
-                gameplay(a)
-
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if seven_image.get_rect().collidepoint(x-125,y-125):
-                a = 7
-                gameplay(a)
-
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if eight_image.get_rect().collidepoint(x-225,y-125):
-                a = 8
-                gameplay(a)
-
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if nine_image.get_rect().collidepoint(x-325,y-125):
-                a = 9
-                gameplay(a)
-
-        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            x , y = pygame.mouse.get_pos()
-            if ten_image.get_rect().collidepoint(x-425,y-125):
-                a = 10
-                gameplay(a)
-        
-    def font():
-        myfont = pygame.font.SysFont('Comic Sans MS', 50)
-        text = myfont.render(str(score), True, white)
-        screen.blit(text, (425,250))
-        pygame.display.update()
-
-    def game():
-        screen1()
-        screen2()
-        player()
-
-    def leave():
-        if event.type == pygame.QUIT:
-            pygame.quit()
+            elif r == 7:
+                screen.blit(out7, (0,0))
+                pygame.display.update()
+                if not dbadd:
+                    cursor.execute(f"insert into scores values('{id1}','{score}','handcricket')")
+                    mydb.commit()
+                    dbadd =False
+                time.sleep(2)
+                pygame.quit()
             
+            #out = 1
 
-    run = True
-    while run:
-        
-        #60 fps
-        clock.tick(60)
-        
-        for event in pygame.event.get():
-            mouse = event.type == pygame.MOUSEMOTION
-            if mouse == False:
-                game()
+        def gameplay(a):
+            #global out
+            global score
+            b = int(random.randint(1,10))
+            #n = 0
+            while True:
+                #n += 1
+                if a == b:
+                    outscreen(r)
+                else:
+                    score = score + a
+                    font()
+                break
+            #balls = n
 
-            leave()
+        #variables
+        a = 0
+        score = 0
+
+        def player():
+            global a
+            global score
+
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
                 
-        pygame.display.update()
-handcricket(id)
+                if one_image.get_rect().collidepoint(x-25,y-25):
+                    a = 1
+                    gameplay(a)
+            
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
+                
+                if two_image.get_rect().collidepoint(x-125,y-25):
+                    a = 2
+                    gameplay(a)
+
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
+                
+                if three_image.get_rect().collidepoint(x-225,y-25):
+                    a = 3
+                    gameplay(a)
+
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
+                
+                if four_image.get_rect().collidepoint(x-325,y-25):
+                    a = 4
+                    gameplay(a)
+
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
+                
+                if five_image.get_rect().collidepoint(x-425,y-25):
+                    a = 5
+                    gameplay(a)
+
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
+                
+                if six_image.get_rect().collidepoint(x-25,y-125):
+                    a = 6
+                    gameplay(a)
+
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
+                
+                if seven_image.get_rect().collidepoint(x-125,y-125):
+                    a = 7
+                    gameplay(a)
+
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
+                
+                if eight_image.get_rect().collidepoint(x-225,y-125):
+                    a = 8
+                    gameplay(a)
+
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                x , y = pygame.mouse.get_pos()
+              
+                if nine_image.get_rect().collidepoint(x-325,y-125):
+                    a = 9
+                    gameplay(a)
+
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                try:
+                    x , y = pygame.mouse.get_pos()
+                except:
+                    pass
+                if ten_image.get_rect().collidepoint(x-425,y-125):
+                    a = 10
+                    gameplay(a)
+            
+        def font():
+            myfont = pygame.font.SysFont('Comic Sans MS', 50)
+            text = myfont.render(str(score), True, white)
+            screen.blit(text, (425,250))
+            pygame.display.update()
+
+        def game():
+            screen1()
+            screen2()
+            player()
+
+        def leave():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                
+
+        run = True
+        while run:
+            
+            #60 fps
+            clock.tick(60)
+            
+            for event in pygame.event.get():
+                mouse = event.type == pygame.MOUSEMOTION
+                if mouse == False:
+                    game()
+
+                leave()
+            
+                pygame.display.update()
+    except:
+        pass

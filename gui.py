@@ -6,6 +6,7 @@ import random
 
 a =""
 root = Tk()
+root.title("class 12 python project")
 root.geometry('500x200')
 def login():
 	login_button.destroy()
@@ -20,7 +21,7 @@ def login():
 	password_label = Label(root,text = "Password")
 	password_label.place(relx = 0.15,rely = 0.5, anchor = CENTER)
 
-	password_entry = Entry(root,font = ('Arial 16'))
+	password_entry = Entry(root,show="*",font = ('Arial 16'))
 	password_entry.place(relx = 0.5,rely = 0.5, anchor = CENTER )
 
 
@@ -29,6 +30,9 @@ def login():
 	def submit():
 
 		username = username_entry.get()
+
+		incorrectpassword_label = Label(root,text = "Incorrect Password")
+		
 
 		cursor.execute(f"select password,id from users where username='{username}'")
 
@@ -39,6 +43,8 @@ def login():
 			if bcrypt.checkpw(password,hashedpwd):
 				root.destroy()
 				mainpy(i[1])
+			else:
+				incorrectpassword_label.place(relx = 0.35,rely = 0.65, anchor = CENTER)
 
 
 
@@ -56,7 +62,7 @@ def signup():
 	password_label = Label(root,text = "Password")
 	password_label.place(relx = 0.15,rely = 0.5, anchor = CENTER)
 
-	password_entry = Entry(root,font = ('Arial 16'))
+	password_entry = Entry(root,show="*",font = ('Arial 16'))
 	password_entry.place(relx = 0.5,rely = 0.5, anchor = CENTER )
 
 	name_entry = Entry(root,font = ('Arial 16'))
@@ -112,11 +118,13 @@ def signup():
 
 
 
-login_button = Button(root,text="Login",command = login) 
+login_button = Button(root,text="Login",command = login ) 
 signup_button = Button(root,text="Signup",command = signup) 
 
 login_button.place(relx = 0.5,rely = 0.5, anchor = CENTER)
 signup_button.place(relx = 0.5,rely = 0.25, anchor = CENTER)
+
+
 
 
 root.mainloop()
